@@ -1,0 +1,18 @@
+#Homepage {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+.all-posts-div {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: green;
+    position: relative;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}

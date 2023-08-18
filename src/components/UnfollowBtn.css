@@ -1,0 +1,12 @@
+.secondary-btn {
+    border-radius: 20px;
+    border: 1px solid white;
+    background-color: black;
+    color: white;
+    padding: 5px 15px;
+    font-weight: bold;
+    outline: none;
+}
+.secondary-btn:hover {
+    
+}

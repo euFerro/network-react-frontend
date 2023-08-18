@@ -1,0 +1,75 @@
+import "./Sidebar.css";
+import MainLink from "./MainLink";
+
+
+function Sidebar({user}) {
+
+    function Userbar({user}) {
+
+        return (
+            <>
+                <div id="user-bar" className="side-item-div">
+    
+                    <div className="post-profile-div">
+                        <a href="user.page_url">
+                            <img
+                                className="profile-pic"
+                                src="user.profile_picture_url"
+                                alt=''
+                            />
+                        </a>
+                    </div>
+    
+                    <div className="user-bar-item">
+                        <div className="username-div">
+                            <a className="name-link" href="user.page_url">
+                                <strong className="username">
+                                    username
+                                </strong>
+                            </a>
+                            <div className="subtle-username">
+                                @username
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div className="side-item-div logout-side-div">
+                        <a className="" href="/logout">
+                            <img
+                                className="logout"
+                                src="logout.svg"
+                                alt=""
+                            />
+                        </a>
+                    </div>
+    
+                </div>
+            </>
+        );
+    
+    }
+    
+    return (
+        <>
+        <div id="side-bar" className="side-bar-div">
+
+            <div className="mainlink-div">
+
+                <MainLink name="" img_source="favicon.svg"          url={"/home"}       have_img={true}     have_name={false}     id=""/>
+                <MainLink name="Homepage" img_source="homepage.svg" url="/home"     have_img={true}     have_name={true}      id=""/>
+                <MainLink name="Search" img_source="search.svg"     url="/search"   have_img={true}     have_name={true}      id=""/>
+                <MainLink name="Profile" img_source="user.svg"      url="/profile"  have_img={true}     have_name={true}      id=""/>
+                <MainLink name="Log In" img_source=""               url="/login"    have_img={false}    have_name={true}      id="login-link"/>
+                <MainLink name="Register" img_source=""             url="/register" have_img={false}    have_name={true}      id="register-link"/>
+
+            </div>
+
+            <Userbar/>
+
+        </div>
+        </>
+    );
+
+}
+
+export default Sidebar;
