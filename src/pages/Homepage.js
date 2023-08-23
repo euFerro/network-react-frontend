@@ -9,9 +9,9 @@ import Post from '../components/Post';
 function Homepage() {
 
     const [load_quantity, setQuantity] = useState(10);
-    const [counter, setCounter] = useState(0);
-    const [is_loading, setLoading] = useState(false);
     const [posts, setPosts] = useState([]);
+    const [is_loading, setLoading] = useState(false);
+    let counter = 0;
 
     
     function set_top_offset() {
@@ -20,48 +20,54 @@ function Homepage() {
         homepage.style.paddingTop = header_nav.offsetHeight + 'px';
     }
 
+    function get_posts() {
+        const start = counter;
+        const end = counter + load_quantity;
+        counter = end;
+        
+        setLoading(true);
+        fetch(`/posts?start=${start}&end=${end}`, {
+            "method": "GET"
+        })
+        .then(response => response.json())
+        .then(response => {
+
+            if (response.error) {
+                alert(`(!) ${response.error}`);
+                return false;
+            } else {
+                const posts = JSON.parse(response);
+                if (posts.length === 0) {
+                    window.onscroll = undefined;
+                } else {
+                    console.log(posts);
+                        setPosts(posts.concat(posts));
+                        // DEBUG
+                        console.log('POSTS ARRAY SET');
+                        console.log(posts);
+                }
+            }
+            setLoading(false);
+            return false;
+        });
+    }
+
     useEffect (() => {
         document.title = 'Home - Social Network';
 
-        function get_posts() {
-            const start = counter;
-            const end = counter + load_quantity;
-            setCounter(end);
-            
-            setLoading(true);
-            fetch(`/posts?start=${start}&end=${end}`, {
-                "method": "GET"
-            })
-            .then(response => response.json())
-            .then(response => {
-    
-                if (response.error) {
-                    alert(`(!) ${response.error}`);
-                    return false;
-                } else {
-                    console.log(JSON.parse(response)); // DEBUG
-                    const new_posts = JSON.parse(response);
-                    if (new_posts.length === 0) {
-                        window.onscroll = undefined;
-                    } else {
-                        setPosts(posts.concat(new_posts));
-                    }
-                }
-                setLoading(false);
-                return false;
-            });
-        }
         set_top_offset();
-        if (counter === 0) {
+        if (counter <= 0) {
+            console.log('GET POSTS');
             get_posts();
         }     
         window.onscroll = () => {
             if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
                 get_posts();
+                console.log('END OF PAGE');
             }
         };
 
-    }, [posts, counter, load_quantity, is_loading]);
+    }, []);
 
     return(
         <>
@@ -83,12 +89,14 @@ function Homepage() {
 
                 {posts.map(post => {
                     return <Post
-                        key={post.pk}
-                        user_id={post.fields.user}
-                        text={post.fields.text}
-                        created_at={post.fields.created_at}
-                        post_img_url={'media/' + post.fields.img}
-                        likes={post.fields.likes}
+                        key={post.key}
+                        user_id={post.user_id}
+                        profile_picture_url={post.profile_picture_url}
+                        username={post.username}
+                        text={post.text}
+                        date={post.date}
+                        post_img_url={post.image_url}
+                        likes={post.likes}
                         />;
                 })}
 

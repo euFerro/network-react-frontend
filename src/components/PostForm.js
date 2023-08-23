@@ -10,7 +10,7 @@ function PostForm({user, csrf_token}) {
         const image = document.getElementById('post-form-img');
         const files = target.files;
 
-        // FileReader support
+        // If there is FileReader support in the browser
         if (FileReader && files && files.length) {
             var fr = new FileReader();
             fr.onload = function () {

@@ -9,6 +9,7 @@ import Registerpage from './pages/Registerpage';
 import Sidebar from './components/Sidebar';
 import { Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
+import Profilepage from './pages/Profilepage';
 
 
 function App() {
@@ -47,7 +48,7 @@ function App() {
             <Routes>
               <Route path='/home' element={<Homepage/>}/>
               <Route path='/search'/>
-              <Route path='/profile'/>
+              <Route path='/profile' element={<Profilepage/>}/>
               <Route path='/login' element={<Loginpage/>}/>
               <Route path='/register' element={<Registerpage/>}/>
             </Routes>

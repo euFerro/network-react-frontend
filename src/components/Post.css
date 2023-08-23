@@ -66,11 +66,11 @@
     justify-content: start;
     border-radius: 15px;
     margin: 10px;
-    width: max-content;
+    width: 100%;
 }
 .post-img {
     border-radius: 15px;
-    width: 100%;
+    width: 90%;
     max-width: 500px;
 }
 .post-text {

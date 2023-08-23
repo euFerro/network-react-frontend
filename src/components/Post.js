@@ -2,7 +2,7 @@ import "./Post.css"
 import { useEffect, useState } from "react";
 
 
-function Post({user_id, text, post_img_url, created_at, likes}) {
+function Post({user_id, username, profile_picture_url, text, post_img_url, date, likes}) {
 
     function style_like_btn() {
         this.style.color = "#ee0055";
@@ -43,7 +43,7 @@ function Post({user_id, text, post_img_url, created_at, likes}) {
     })
 
     let post_img = '';
-    if (post_img_url !== 'media/') {
+    if (post_img_url !== '') {
 
         post_img = <div className="post-img-div">
                         <img
@@ -64,7 +64,7 @@ function Post({user_id, text, post_img_url, created_at, likes}) {
                         <img
                             className="profile-pic"
                             alt="Avatar"
-                            src="profile_img_url"
+                            src={profile_picture_url}
                         />
                     </a>
                 </div>
@@ -74,14 +74,14 @@ function Post({user_id, text, post_img_url, created_at, likes}) {
                     <div className="post-header">
                         <a className="name-link" href="post.user.page_url">
                             <span className="post-fullname">
-                                {user_id} fullname
+                                {username}
                             </span>
                         </a>
                         <span className="post-info">
-                            @{user_id}
+                            @{username}
                         </span>
                         <span className="post-info">
-                            {created_at}
+                            {date}
                         </span>
                     </div>
                     
