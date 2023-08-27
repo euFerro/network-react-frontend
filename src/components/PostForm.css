@@ -1,0 +1,99 @@
+/* Simple post form style ------------------------------------------ */
+.post-form-div {
+    width: 100%;
+}
+
+.text-input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    width: 100%;
+    height: 40px;
+    font-size: larger;
+    margin-right: 2vmin;
+    margin-top: 1vmin;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+.text-input:focus {
+    border: none;
+}
+
+.primary-btn {
+    background-color: #00eeff;
+    color: black;
+    font-size: large;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    width: 80px;
+    height: 40px;
+    margin-right: 10px;
+    padding: 2px;
+    transition: ease;
+}
+.primary-btn:hover {
+    background-color: #00ffff;
+    color: black;
+    font-size: large;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    width: 80px;
+    height: 40px;
+    margin-right: 10px;
+    padding: 2px;
+    animation-name: primaryBtnAnim;
+    animation-duration: 500ms;
+}
+
+@keyframes primaryBtnAnim {
+    0% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(5deg);
+    }
+    50%{
+        transform: rotate(-3deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+input[type="file"] {
+    display: none;
+}
+
+#file-input {
+    cursor: pointer;
+}
+
+.post-form-footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 5px;
+    color: var(--subtle-text-color);
+    width: 100%;
+}
+
+.x-btn {
+    fill: white;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    background-color: #303030;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}
