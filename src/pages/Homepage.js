@@ -40,11 +40,11 @@ function Homepage() {
                 if (posts.length === 0) {
                     window.onscroll = undefined;
                 } else {
-                    console.log(posts);
+                    // console.log(posts);
                         setPosts(posts.concat(posts));
                         // DEBUG
-                        console.log('POSTS ARRAY SET');
-                        console.log(posts);
+                        // console.log('POSTS ARRAY SET');
+                        // console.log(posts);
                 }
             }
             setLoading(false);
@@ -57,7 +57,6 @@ function Homepage() {
 
         set_top_offset();
         if (counter <= 0) {
-            console.log('GET POSTS');
             get_posts();
         }     
         window.onscroll = () => {
@@ -112,7 +111,7 @@ function Homepage() {
                         <></>
                     )}
                     
-                    Following Posts
+                    Following Posts Here
                 </div>
 
             </div>

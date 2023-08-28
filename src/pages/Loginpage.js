@@ -1,7 +1,7 @@
 import "./Login&Register.css";
 import "./Loading.css";
 import { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
 import TooglePassword from "../components/TooglePassword";
 
 function Loginpage() {
@@ -35,7 +35,7 @@ function Loginpage() {
         if (passwordInput.value === '') {
             passwordInput.style.borderBottom = '4px solid #ddaa00';
             const passwordMsg = document.querySelector('#password-msg');
-            passwordMsg.innerHTML = 'fill here your password'; 
+            passwordMsg.innerHTML = 'fill here your password';
             passwordMsg.style.color = '#ddaa00';
         }
         if (usernameInput.value === '' || passwordInput.value === '') {
@@ -44,6 +44,37 @@ function Loginpage() {
         // TODO fetch
         setLoading(true);
 
+        const formData = new FormData();
+        formData.append('username', usernameInput.value);
+        formData.append('password', passwordInput.value);
+
+        fetch('/login', {
+            "method": "POST",
+            "body": formData
+        })
+        .then(response => response.json())
+        .then(response => {
+            if (response.error) {
+                alert(response.error);
+
+                const usernameInput = document.querySelector('#login-username-input');
+                const passwordInput = document.querySelector('#login-pass-input');
+                const login_form_msg = document.querySelector('#login-form-msg');
+
+                usernameInput.style.borderBottom = '4px solid #f00';
+                passwordInput.style.borderBottom = '4px solid #f00';
+                login_form_msg.innerHTML = response.error;
+                login_form_msg.style.color = '#f00';
+
+            }
+            if (response.user) {
+                localStorage.setItem("logged_user", response.user);
+                // Redirect logged user
+                window.location.replace('/home');
+            }
+            setLoading(false);
+        })
+
         return false
     }
 
@@ -51,13 +82,11 @@ function Loginpage() {
         clearMsgs();
         const usernameInput = document.querySelector('#login-username-input');
         const passwordInput = document.querySelector('#login-pass-input');
+        const login_form_msg = document.querySelector('#login-form-msg');
 
-        if (usernameInput.value !== '') {
-            usernameInput.style.borderBottom = '';
-        }
-        if (passwordInput.value !== '') {
-            passwordInput.style.borderBottom = '';
-        }
+        usernameInput.style.borderBottom = '';
+        passwordInput.style.borderBottom = '';
+        login_form_msg.style = '';
     }
 
     useEffect(() => {
@@ -76,6 +105,7 @@ function Loginpage() {
             )}
 
             <form onSubmit={login} className="center-group-container">
+                <div id="login-form-msg"></div>
                 <div className="form-group center-group-container">
                     <input onChange={resetLooks} id="login-username-input" autoFocus className="text-input-2" type="text" name="username" placeholder="Username"/>
                     <div id="username-msg" className="msg-div"></div>
