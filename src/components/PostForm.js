@@ -2,7 +2,7 @@ import "./PostForm.css";
 import { useState, useEffect } from "react";
 
 
-function PostForm({user, csrf_token}) {
+function PostForm({user}) {
 
     function loadImg(event) {
         const target = event.target;
@@ -19,7 +19,7 @@ function PostForm({user, csrf_token}) {
             fr.readAsDataURL(files[0]);
             imageDiv.style.display = 'block';
         } else {
-            console.log('Browser doesn\'t support File API');
+            alert('Browser doesn\'t support file upload');
         }
     }
 
@@ -116,19 +116,21 @@ function PostForm({user, csrf_token}) {
                     <div className="post-profile-div">
                         <img
                             className="profile-pic"
-                            src="user.profile_picture_url"
+                            src={user.profile_picture_url}
                             alt=""
                         />
                     </div>
 
                     <div className="post-content">
+
                         <div className="post-header">
                             <span className="post-fullname">New Post</span>
-                            <span className="post-info">@username</span>
+                            <span className="post-info">@{user.username}</span>
                         </div>
-                        <div className="post-form-div">
 
+                        <div className="post-form-div">
                             <form id="simple-post-form">
+
                                 <input id="user-header-input" type="hidden" value="user.id"/>
                                 <textarea className="text-input" id="text-header-input" autoComplete="off" name="text" type="text" placeholder="What is happening?"/>
                           
@@ -164,6 +166,7 @@ function PostForm({user, csrf_token}) {
                                 <div id="post-header-msg-div"></div>
                             </form>
                         </div>
+
                     </div>
 
                 </div>

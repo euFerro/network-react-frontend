@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import "./HeaderNav.css"
 
-function HeaderNav({all_posts_id, following_posts_id}) {
+function HeaderNav({all_posts_id, following_posts_id, user}) {
 
     const [state, setState] = useState({
         name: "Homepage",
@@ -29,7 +29,7 @@ function HeaderNav({all_posts_id, following_posts_id}) {
         all_posts_div.style.display = 'block';
         following_posts_div.style.display = 'none';
         setState({
-            ...state,
+            name: "Homepage",
             on_all_posts: true,
             on_following_posts: false
         })
@@ -41,7 +41,7 @@ function HeaderNav({all_posts_id, following_posts_id}) {
         all_posts_div.style.display = 'none';
         following_posts_div.style.display = 'block';
         setState({
-            ...state,
+            name: "Following",
             on_all_posts: false,
             on_following_posts: true
         })
@@ -65,23 +65,39 @@ function HeaderNav({all_posts_id, following_posts_id}) {
                     </div>
                     <div className="home-tab-div">
 
-                        <div onClick={setAllCurrent} id="AllPosts" className="home-tab">All Posts
-                            {state.on_all_posts ?
-                                (
-                                <div className="blue-bar"></div>
-                                ) : (
-                                    <></>
-                                )}
-                        </div>
+                        {user ? (
+                            <>
+                            <div onClick={setAllCurrent} id="AllPosts" className="home-tab">All Posts
 
-                        <div onClick={setFollowingCurrent} id="FollowingPosts" className="home-tab">Following
-                            {state.on_following_posts ?
-                                (
-                                <div className="blue-bar"></div>
-                                ) : (
-                                    <></>
-                                )}
-                        </div>
+                                {state.on_all_posts ?
+                                    (
+                                    <div className="blue-bar"></div>
+                                    ) : (
+                                        <></>
+                                    )}
+                            </div>
+
+                            <div onClick={setFollowingCurrent} id="FollowingPosts" className="home-tab">Following
+
+                                {state.on_following_posts ?
+                                    (
+                                    <div className="blue-bar"></div>
+                                    ) : (
+                                        <></>
+                                    )}
+                            </div>
+                            </>
+                        ) : (
+                            <div onClick={setAllCurrent} id="AllPosts" className="home-tab">All Posts
+                            
+                                {state.on_all_posts ?
+                                    (
+                                    <div className="blue-bar"></div>
+                                    ) : (
+                                        <></>
+                                    )}
+                            </div>
+                        )}
 
                     </div>
                 </div>

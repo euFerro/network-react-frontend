@@ -51,10 +51,7 @@ function App() {
     window.addEventListener('resize', resizeMain);
 
     if (user === undefined) {
-      console.log('USER NOT LOGGED IN');
       get_logged_user();
-    } else {
-      console.log('USER IS LOGGED IN');
     }
   })
 
@@ -68,7 +65,7 @@ function App() {
       <main>
           <div className="main">
             <Routes>
-              <Route path='/home' element={<Homepage/>}/>
+              <Route path='/home' element={<Homepage user={user}/>}/>
               <Route path='/search'/>
               <Route path='/profile' element={<Profilepage/>}/>
               <Route path='/login' element={<Loginpage/>}/>

@@ -7,8 +7,8 @@ import { json } from "react-router-dom";
 function Sidebar({user}) {
 
     if  (user !== undefined) {
-        // console.log('SIDEBAR LOGGED : ' + user);
         user = JSON.parse(user);
+        console.log(user);
     }
 
     function Userbar({user}) {
@@ -76,8 +76,8 @@ function Sidebar({user}) {
                     <></>
                 ) : (
                     <>
-                    <MainLink name="Log In" img_source=""               url="/login"    have_img={false}    have_name={true}      id="login-link"/>
-                    <MainLink name="Register" img_source=""             url="/register" have_img={false}    have_name={true}      id="register-link"/>
+                    <MainLink name="Log In" img_source=""        url="/login"    have_img={false}    have_name={true}      id="login-link"/>
+                    <MainLink name="Register" img_source=""      url="/register" have_img={false}    have_name={true}      id="register-link"/>
                     </>
                 )}
 
