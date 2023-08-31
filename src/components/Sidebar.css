@@ -9,7 +9,7 @@
     background-color: black;
     padding-left: 15vmin;
     z-index: 1000;
-    border-right: 1px  solid  #303030;
+    border-right: none;
 }
 .mainlink-div {
     display: flex;

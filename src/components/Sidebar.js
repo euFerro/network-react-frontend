@@ -35,7 +35,7 @@ function Sidebar({user}) {
                         <div className="username-div">
                             <a className="name-link" href="user.page_url">
                                 <strong className="username">
-                                    {user.username}
+                                    {user.first_name} {user.last_name}
                                 </strong>
                             </a>
                             <div className="subtle-username">
@@ -70,10 +70,11 @@ function Sidebar({user}) {
                 <MainLink name="" img_source="favicon.svg"          url={"/home"}   have_img={true}     have_name={false}     id=""/>
                 <MainLink name="Homepage" img_source="homepage.svg" url="/home"     have_img={true}     have_name={true}      id=""/>
                 <MainLink name="Search" img_source="search.svg"     url="/search"   have_img={true}     have_name={true}      id=""/>
-                <MainLink name="Profile" img_source="user.svg"      url="/profile"  have_img={true}     have_name={true}      id=""/>
                 
                 {user ? (
-                    <></>
+                    <>
+                    <MainLink name="Profile" img_source="user.svg"      url="/profile"  have_img={true}     have_name={true}      id=""/>
+                    </>
                 ) : (
                     <>
                     <MainLink name="Log In" img_source=""        url="/login"    have_img={false}    have_name={true}      id="login-link"/>

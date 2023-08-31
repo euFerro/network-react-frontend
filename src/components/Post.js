@@ -81,7 +81,7 @@ function Post({user_id, username, profile_picture_url, text, post_img_url, date,
                             @{username}
                         </span>
                         <span className="post-info">
-                            {date}
+                            {date.hour}:{date.minute} {date.month}/{date.day}/{date.year}
                         </span>
                     </div>
                     

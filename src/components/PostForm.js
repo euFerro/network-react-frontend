@@ -11,6 +11,7 @@ function PostForm({user}) {
         const files = target.files;
 
         // If there is FileReader support in the browser
+
         if (FileReader && files && files.length) {
             var fr = new FileReader();
             fr.onload = function () {
@@ -131,7 +132,7 @@ function PostForm({user}) {
                         <div className="post-form-div">
                             <form id="simple-post-form">
 
-                                <input id="user-header-input" type="hidden" value="user.id"/>
+                                <input id="user-header-input" type="hidden" value={user.user_id}/>
                                 <textarea className="text-input" id="text-header-input" autoComplete="off" name="text" type="text" placeholder="What is happening?"/>
                           
                                 <div className="post-img-div">

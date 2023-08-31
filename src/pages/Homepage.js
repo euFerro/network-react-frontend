@@ -101,7 +101,7 @@ function Homepage({user}) {
                         profile_picture_url={post.profile_picture_url}
                         username={post.username}
                         text={post.text}
-                        date={post.date}
+                        date={post.created_at}
                         post_img_url={post.image_url}
                         likes={post.likes}
                         />;
