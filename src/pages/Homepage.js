@@ -6,13 +6,17 @@ import PostForm from "../components/PostForm";
 import Post from '../components/Post';
 
 
-function Homepage() {
+function Homepage({user}) {
 
     const [load_quantity, setQuantity] = useState(10);
     const [posts, setPosts] = useState([]);
     const [is_loading, setLoading] = useState(false);
     let counter = 0;
 
+    if  (user !== undefined) {
+        user = JSON.parse(user);
+        console.log(user);
+    }
     
     function set_top_offset() {
         const header_nav = document.querySelector('#header-nav');
@@ -70,11 +74,15 @@ function Homepage() {
 
     return(
         <>
-            <HeaderNav all_posts_id={'all-posts-div'} following_posts_id={'following-posts-div'}/>
+            <HeaderNav all_posts_id={'all-posts-div'} following_posts_id={'following-posts-div'} user={user}/>
 
             <div id='Homepage'>
                 
-                <PostForm/>
+                {user ? (
+                    <PostForm user={user}/>
+                ) : (
+                    <></>
+                )}
 
                 <div id="all-posts-div">
 
@@ -93,7 +101,7 @@ function Homepage() {
                         profile_picture_url={post.profile_picture_url}
                         username={post.username}
                         text={post.text}
-                        date={post.date}
+                        date={post.created_at}
                         post_img_url={post.image_url}
                         likes={post.likes}
                         />;

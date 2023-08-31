@@ -3,8 +3,12 @@ import FollowBtn from "../components/FollowBtn";
 import UnfollowBtn from "../components/UnfollowBtn";
 
 
-function Profilepage({me, user}) {
-    
+function Profilepage({user}) {
+
+    if  (user !== undefined) {
+        user = JSON.parse(user);
+        console.log(user);
+    }
 
     return(
 
@@ -18,7 +22,7 @@ function Profilepage({me, user}) {
                     <div className="profile-img-div">
                         <img
                             className="profile-img"
-                            src='user.profile_picture_url'
+                            src={user.profile_picture_url}
                             alt="Profile Avatar"
                         />
                     </div>
@@ -26,7 +30,7 @@ function Profilepage({me, user}) {
                     <div className="profile-header-item">
 
                         <div className="profile-name">
-                            first_name last_name
+                            {user.first_name} {user.last_name}
                         </div>
 
                         <div className="follow-div">
@@ -40,7 +44,7 @@ function Profilepage({me, user}) {
                     </div>
 
                     <div className="subtle-text">
-                        @username
+                        @{user.username}
                     </div>
 
                     <div className="profile-header-item">

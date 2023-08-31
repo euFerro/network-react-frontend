@@ -7,8 +7,8 @@ import { json } from "react-router-dom";
 function Sidebar({user}) {
 
     if  (user !== undefined) {
-        // console.log('SIDEBAR LOGGED : ' + user);
         user = JSON.parse(user);
+        console.log(user);
     }
 
     function Userbar({user}) {
@@ -35,7 +35,7 @@ function Sidebar({user}) {
                         <div className="username-div">
                             <a className="name-link" href="user.page_url">
                                 <strong className="username">
-                                    {user.username}
+                                    {user.first_name} {user.last_name}
                                 </strong>
                             </a>
                             <div className="subtle-username">
@@ -70,14 +70,15 @@ function Sidebar({user}) {
                 <MainLink name="" img_source="favicon.svg"          url={"/home"}   have_img={true}     have_name={false}     id=""/>
                 <MainLink name="Homepage" img_source="homepage.svg" url="/home"     have_img={true}     have_name={true}      id=""/>
                 <MainLink name="Search" img_source="search.svg"     url="/search"   have_img={true}     have_name={true}      id=""/>
-                <MainLink name="Profile" img_source="user.svg"      url="/profile"  have_img={true}     have_name={true}      id=""/>
                 
                 {user ? (
-                    <></>
+                    <>
+                    <MainLink name="Profile" img_source="user.svg"      url="/profile"  have_img={true}     have_name={true}      id=""/>
+                    </>
                 ) : (
                     <>
-                    <MainLink name="Log In" img_source=""               url="/login"    have_img={false}    have_name={true}      id="login-link"/>
-                    <MainLink name="Register" img_source=""             url="/register" have_img={false}    have_name={true}      id="register-link"/>
+                    <MainLink name="Log In" img_source=""        url="/login"    have_img={false}    have_name={true}      id="login-link"/>
+                    <MainLink name="Register" img_source=""      url="/register" have_img={false}    have_name={true}      id="register-link"/>
                     </>
                 )}
 
