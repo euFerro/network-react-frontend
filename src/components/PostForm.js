@@ -1,8 +1,12 @@
 import "./PostForm.css";
 import { useState, useEffect } from "react";
+import Post from "./Post";
 
 
 function PostForm({user}) {
+
+    const [new_posts, setNewPost] = useState([]);
+
 
     function loadImg(event) {
         const target = event.target;
@@ -27,9 +31,7 @@ function PostForm({user}) {
     function unloadImg(event) {
         const target = event.target;
         const imageDiv = document.querySelector('.post-img-div');
-
         target.value = '';
-        
         imageDiv.style.display = 'none';
     }
 
@@ -78,6 +80,7 @@ function PostForm({user}) {
                 error.innerHTML = response.error;
                 error.style.color = "red";
                 document.querySelector("#post-header-msg-div").append(error);
+                return false;
             }
             if (response.ok) {
                 const ok = document.createElement('p');
@@ -85,6 +88,16 @@ function PostForm({user}) {
                 ok.style.color = "aqua";
                 document.querySelector("#post-header-msg-div").append(ok);
                 document.querySelector("#text-header-input").value = "";
+
+                setNewPost(new_posts.concat([response.post]));
+                console.log(`new_posts: ${new_posts}`);
+                // Play animation
+                const anim_cont = document.querySelector('.animation-container');
+                anim_cont.style.animationPlayState = 'running';
+                anim_cont.addEventListener('animationend', () => {
+                    anim_cont.style.animationPlayState = 'paused';
+                })
+                return false;
             }
             console.log(response);
         })
@@ -95,7 +108,7 @@ function PostForm({user}) {
 
     function resizeTextarea() {
         const textarea = document.querySelector('#text-header-input');
-        textarea.style.height = this.scrollHeight+ 'px';
+        textarea.style.height = this.scrollHeight + 'px';
     }
 
     useEffect(() => {
@@ -104,7 +117,7 @@ function PostForm({user}) {
         document.querySelector("#simple-post-form").addEventListener("submit", send_post);
         const textarea = document.querySelector('#text-header-input');
         textarea.addEventListener('input', resizeTextarea);
-    })
+    }, [])
 
     
     return(
@@ -170,6 +183,23 @@ function PostForm({user}) {
 
                     </div>
 
+                </div>
+                <div className="animation-container">
+                    
+                    {new_posts.map(post => {
+                        return <Post
+                        key={post.key}
+                        user_id={post.user_id}
+                        profile_picture_url={post.profile_picture_url}
+                        username={post.username}
+                        text={post.text}
+                        date={post.created_at}
+                        post_img_url={post.image_url}
+                        likes={post.likes}
+                        comment_count={post.comment_count}
+                        />;
+                    })}
+                        
                 </div>
 
             </div>

@@ -9,13 +9,15 @@ import Post from '../components/Post';
 function Homepage({user}) {
 
     const [load_quantity, setQuantity] = useState(10);
-    const [posts, setPosts] = useState([]);
+    const [allPosts, setAllPosts] = useState([]);
+    const [followingPosts, setFollowingPosts] = useState([]);
     const [is_loading, setLoading] = useState(false);
-    let counter = 0;
+    let counter_all_posts = 0;
+    let counter_following_posts = 0;
 
     if  (user !== undefined) {
         user = JSON.parse(user);
-        console.log(user);
+        // console.log(user);
     }
     
     function set_top_offset() {
@@ -24,13 +26,14 @@ function Homepage({user}) {
         homepage.style.paddingTop = header_nav.offsetHeight + 'px';
     }
 
-    function get_posts() {
-        const start = counter;
-        const end = counter + load_quantity;
-        counter = end;
+    function getAllPosts() {
+        // console.log('GET ALL POSTS');
+        const start = counter_all_posts;
+        const end = counter_all_posts + load_quantity;
+        counter_all_posts = end;
         
         setLoading(true);
-        fetch(`/posts?start=${start}&end=${end}`, {
+        fetch(`/posts?q=all-posts&start=${start}&end=${end}`, {
             "method": "GET"
         })
         .then(response => response.json())
@@ -44,11 +47,38 @@ function Homepage({user}) {
                 if (posts.length === 0) {
                     window.onscroll = undefined;
                 } else {
+                    setAllPosts(allPosts.concat(posts));
                     // console.log(posts);
-                        setPosts(posts.concat(posts));
-                        // DEBUG
-                        // console.log('POSTS ARRAY SET');
-                        // console.log(posts);
+                }
+            }
+            setLoading(false);
+            return false;
+        });
+    }
+
+    function getFollowingPosts() {
+        // console.log('GET FOLLOWING POSTS');
+        const start = counter_following_posts;
+        const end = counter_following_posts + load_quantity;
+        counter_following_posts = end;
+        
+        setLoading(true);
+        fetch(`/posts?q=following-posts&start=${start}&end=${end}`, {
+            "method": "GET",
+        })
+        .then(response => response.json())
+        .then(response => {
+
+            if (response.error) {
+                alert(`(!) Error - ${response.error}`);
+                return false;
+            } else {
+                const posts = JSON.parse(response);
+                if (posts.length === 0) {
+                    window.onscroll = undefined;
+                } else {
+                    setFollowingPosts(followingPosts.concat(posts));
+                    // console.log(posts);
                 }
             }
             setLoading(false);
@@ -60,13 +90,16 @@ function Homepage({user}) {
         document.title = 'Home - Social Network';
 
         set_top_offset();
-        if (counter <= 0) {
-            get_posts();
-        }     
+        if (counter_all_posts === 0 ) {
+            getAllPosts();
+        }
+        if (counter_following_posts === 0) {
+            getFollowingPosts();
+        }
         window.onscroll = () => {
             if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-                get_posts();
-                console.log('END OF PAGE');
+                getAllPosts();
+                // console.log('END OF PAGE');
             }
         };
 
@@ -94,7 +127,7 @@ function Homepage({user}) {
                     <></>
                 )}
 
-                {posts.map(post => {
+                {allPosts.map(post => {
                     return <Post
                         key={post.key}
                         user_id={post.user_id}
@@ -104,6 +137,7 @@ function Homepage({user}) {
                         date={post.created_at}
                         post_img_url={post.image_url}
                         likes={post.likes}
+                        comment_count={post.comment_count}
                         />;
                 })}
 
@@ -118,8 +152,21 @@ function Homepage({user}) {
                     ) : (
                         <></>
                     )}
+
+                    {followingPosts.map(post => {
+                        return <Post
+                            key={post.pk}
+                            user_id={post.user_id}
+                            profile_picture_url={post.profile_picture_url}
+                            username={post.username}
+                            text={post.text}
+                            date={post.created_at}
+                            post_img_url={post.image_url}
+                            likes={post.likes}
+                            comment_count={post.comment_count}
+                        />
+                    })}
                     
-                    Following Posts Here
                 </div>
 
             </div>

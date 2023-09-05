@@ -1,14 +1,44 @@
 import "./Profilepage.css";
 import FollowBtn from "../components/FollowBtn";
 import UnfollowBtn from "../components/UnfollowBtn";
+import { useState, useEffect } from "react";
+import Post from "../components/Post";
 
 
 function Profilepage({user}) {
+
+    const [posts, setPosts] = useState([]);
+    let counter = 0;
 
     if  (user !== undefined) {
         user = JSON.parse(user);
         console.log(user);
     }
+
+    function getUserPosts() {
+        fetch(`/posts?q=user-posts&username=${user.username}`, {
+            "method": "GET",
+        })
+        .then(response => response.json())
+        .then(response => {
+            if (response.error) {
+                alert(`(!) Error - ${response.error}`);
+                return false;
+            } else {
+                const user_posts = JSON.parse(response);
+                console.log(user_posts);
+                setPosts(posts.concat(user_posts));
+                counter++;
+            }
+            return false;
+        })
+    }
+
+    useEffect(() => {
+        if (counter === 0) {
+            getUserPosts();
+        }
+    }, [])
 
     return(
 
@@ -49,10 +79,10 @@ function Profilepage({user}) {
 
                     <div className="profile-header-item">
                         <div className="profile-header-item">
-                            following_count <span className="subtle-text mx-1">Following</span>
+                            {user.followers_count} <span className="subtle-text mx-1">Followers</span>
                         </div>
                         <div className="profile-header-item">
-                            followers_count <span className="subtle-text mx-1">Followers</span>
+                            {user.following_count} <span className="subtle-text mx-1">Following</span>
                         </div>
                     </div>
 
@@ -60,7 +90,19 @@ function Profilepage({user}) {
                 
                 <div id="all-posts-div">
 
-                    for post in posts TODO
+                    {posts.map(post => {
+                        return <Post
+                            key={post.key}
+                            user_id={post.user_id}
+                            profile_picture_url={post.profile_picture_url}
+                            username={post.username}
+                            text={post.text}
+                            date={post.created_at}
+                            post_img_url={post.image_url}
+                            likes={post.likes}
+                            comment_count={post.comment_count}
+                            />
+                    })}
                 
                 </div>
 

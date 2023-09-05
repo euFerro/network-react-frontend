@@ -2,7 +2,7 @@ import "./Post.css"
 import { useEffect, useState } from "react";
 
 
-function Post({user_id, username, profile_picture_url, text, post_img_url, date, likes}) {
+function Post({user_id, username, profile_picture_url, text, post_img_url, date, likes, comment_count}) {
 
     function style_like_btn() {
         this.style.color = "#ee0055";
@@ -110,7 +110,7 @@ function Post({user_id, username, profile_picture_url, text, post_img_url, date,
                                     </g>
                                 </svg>
                             </div>
-                            <span className="footer-num">post.comments</span>
+                            <span className="footer-num">{comment_count}</span>
                         </div>
 
                     </div>

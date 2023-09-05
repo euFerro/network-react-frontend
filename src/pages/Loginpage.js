@@ -55,7 +55,7 @@ function Loginpage() {
         .then(response => response.json())
         .then(response => {
             if (response.error) {
-                alert(response.error);
+                // alert(response.error);
 
                 const usernameInput = document.querySelector('#login-username-input');
                 const passwordInput = document.querySelector('#login-pass-input');
@@ -105,7 +105,7 @@ function Loginpage() {
             )}
 
             <form onSubmit={login} className="center-group-container">
-                <div id="login-form-msg"></div>
+                <div id="login-form-msg" className="msg-div"></div>
                 <div className="form-group center-group-container">
                     <input onChange={resetLooks} id="login-username-input" autoFocus className="text-input-2" type="text" name="username" placeholder="Username"/>
                     <div id="username-msg" className="msg-div"></div>

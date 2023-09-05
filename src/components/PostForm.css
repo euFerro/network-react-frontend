@@ -97,3 +97,27 @@ input[type="file"] {
     align-items: center;
     justify-content: center;
 }
+
+.animation-container {
+    height: max-content;
+    animation-direction: normal;
+    animation-name: post_appear;
+    animation-duration: 1s;
+    animation-timing-function: ease-in;
+    animation-play-state: paused;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+}
+
+@keyframes post_appear {
+    0% {
+        opacity: 0;
+        height: 0%;
+        border-top: 8px solid green;
+    }
+    100% {
+        opacity: 1;
+        width: 100%;
+        border-top: 0px solid green;
+    }
+}
