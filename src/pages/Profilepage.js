@@ -8,7 +8,7 @@ import Post from "../components/Post";
 function Profilepage({user}) {
 
     const [posts, setPosts] = useState([]);
-    let counter = 0;
+    const [is_loading, setLoading] = useState(false);
 
     if  (user !== undefined) {
         user = JSON.parse(user);
@@ -16,6 +16,7 @@ function Profilepage({user}) {
     }
 
     function getUserPosts() {
+        setLoading(true);
         fetch(`/posts?q=user-posts&username=${user.username}`, {
             "method": "GET",
         })
@@ -28,16 +29,14 @@ function Profilepage({user}) {
                 const user_posts = JSON.parse(response);
                 console.log(user_posts);
                 setPosts(posts.concat(user_posts));
-                counter++;
             }
+            setLoading(false);
             return false;
         })
     }
 
     useEffect(() => {
-        if (counter === 0) {
-            getUserPosts();
-        }
+        getUserPosts();
     }, [])
 
     return(
@@ -89,6 +88,14 @@ function Profilepage({user}) {
                 </div>
                 
                 <div id="all-posts-div">
+
+                    {is_loading ? (
+                        <div className='loading-container'>
+                            <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+                        </div>
+                    ) : (
+                        <></>
+                    )}
 
                     {posts.map(post => {
                         return <Post

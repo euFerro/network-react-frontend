@@ -16,3 +16,14 @@
     overflow-y: hidden;
     overflow-x: hidden;
 }
+
+.nothing-here {
+    width: 100%;
+    font-size: large;
+    color: inherit;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20%;
+}

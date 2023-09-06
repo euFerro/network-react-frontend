@@ -7,6 +7,15 @@ function PostForm({user}) {
 
     const [new_posts, setNewPost] = useState([]);
 
+    function clearTextInput() {
+        const textInput = document.getElementById("text-header-input");
+        textInput.value = '';
+    }
+
+    function clearMsgs() {
+        const msgDiv = document.querySelector("#post-header-msg-div");
+        msgDiv.innerHTML = '';
+    }
 
     function loadImg(event) {
         const target = event.target;
@@ -28,10 +37,10 @@ function PostForm({user}) {
         }
     }
 
-    function unloadImg(event) {
-        const target = event.target;
+    function unloadImg() {
+        const image_input = document.querySelector('#image-header-input');
         const imageDiv = document.querySelector('.post-img-div');
-        target.value = '';
+        image_input.value = '';
         imageDiv.style.display = 'none';
     }
 
@@ -88,15 +97,28 @@ function PostForm({user}) {
                 ok.style.color = "aqua";
                 document.querySelector("#post-header-msg-div").append(ok);
                 document.querySelector("#text-header-input").value = "";
+                if (fileInput.value !== '') {
+                    unloadImg();
+                }
+                clearTextInput();
+                clearMsgs();
 
                 setNewPost(new_posts.concat([response.post]));
-                console.log(`new_posts: ${new_posts}`);
-                // Play animation
-                const anim_cont = document.querySelector('.animation-container');
-                anim_cont.style.animationPlayState = 'running';
-                anim_cont.addEventListener('animationend', () => {
-                    anim_cont.style.animationPlayState = 'paused';
-                })
+
+                // Play loading animation
+                const loading_bar = document.querySelector('.loading-animation');
+                const new_post_div  =document.querySelector(".post-animation");
+                loading_bar.style.display = 'block';
+                new_post_div.style.display = 'block';
+                loading_bar.style.animationPlayState = 'running';
+                new_post_div.style.animationPlayState = 'running';
+                setTimeout(() => {
+                    loading_bar.style.display = 'none';
+                    loading_bar.style.animationPlayState = 'paused';
+                }, 1500);
+                setTimeout(() => {
+                    new_post_div.style.animationPlayState = 'paused';
+                }, 1470);
                 return false;
             }
             console.log(response);
@@ -182,22 +204,24 @@ function PostForm({user}) {
                         </div>
 
                     </div>
-
                 </div>
-                <div className="animation-container">
+
+                <div className="loading-animation"></div>
+
+                <div className="post-animation">
                     
                     {new_posts.map(post => {
                         return <Post
-                        key={post.key}
-                        user_id={post.user_id}
-                        profile_picture_url={post.profile_picture_url}
-                        username={post.username}
-                        text={post.text}
-                        date={post.created_at}
-                        post_img_url={post.image_url}
-                        likes={post.likes}
-                        comment_count={post.comment_count}
-                        />;
+                            key={post.key}
+                            user_id={post.user_id}
+                            profile_picture_url={post.profile_picture_url}
+                            username={post.username}
+                            text={post.text}
+                            date={post.created_at}
+                            post_img_url={post.image_url}
+                            likes={post.likes}
+                            comment_count={post.comment_count}
+                            />;
                     })}
                         
                 </div>

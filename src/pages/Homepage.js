@@ -141,6 +141,12 @@ function Homepage({user}) {
                         />;
                 })}
 
+                {allPosts.length === 0 ? (
+                    <div className='nothing-here'>Nothing here yet.</div>
+                ) : (
+                    <></>
+                )}
+
                 </div>
 
                 <div id="following-posts-div">
@@ -167,6 +173,12 @@ function Homepage({user}) {
                         />
                     })}
                     
+                    {followingPosts.length === 0 ? (
+                        <div className='nothing-here'>Nothing here yet.</div>
+                    ) : (
+                        <></>
+                    )}
+
                 </div>
 
             </div>
