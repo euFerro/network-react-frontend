@@ -1,7 +1,6 @@
 import "./Sidebar.css";
 import MainLink from "./MainLink";
-import { useState, useEffect } from "react";
-import { json } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 function Sidebar({user}) {
@@ -22,22 +21,22 @@ function Sidebar({user}) {
                 <div id="user-bar" className="side-item-div">
     
                     <div className="post-profile-div">
-                        <a href="user.page_url">
+                        <Link to={'/profile'}>
                             <img
                                 className="profile-pic"
                                 src={user.profile_picture_url}
                                 alt=''
                             />
-                        </a>
+                        </Link>
                     </div>
     
                     <div className="user-bar-item">
                         <div className="username-div">
-                            <a className="name-link" href="user.page_url">
-                                <strong className="username">
+                            <Link to={'/profile'}>
+                                <strong className="username name-link">
                                     {user.first_name} {user.last_name}
                                 </strong>
-                            </a>
+                            </Link>
                             <div className="subtle-username">
                                 @{user.username}
                             </div>

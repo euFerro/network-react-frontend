@@ -97,3 +97,50 @@ input[type="file"] {
     align-items: center;
     justify-content: center;
 }
+
+.post-animation {
+    display: block;
+    height: max-content;
+    animation-name: post_appear;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-in;
+    animation-play-state: paused;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+}
+
+.loading-animation {
+    width: 100%;
+    height: 6px;
+    animation-name: loading_bar;
+    background-color: #00ff00;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-in;
+    animation-fill-mode: forwards;
+    animation-play-state: paused;
+    animation-iteration-count: infinite;
+    display: none;
+}
+
+@keyframes loading_bar {
+    0% {
+        width: 100%;
+        margin-left: 0%;
+    }
+    100% {
+        width: 0%;
+        margin-left: 100%;
+        display: none;
+    }
+}
+
+@keyframes post_appear {
+    0% {
+        opacity: 0;
+        height: 0%;
+    }
+    100% {
+        opacity: 1;
+        height: 100%;
+    }
+}
