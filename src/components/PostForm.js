@@ -3,9 +3,13 @@ import { useState, useEffect } from "react";
 import Post from "./Post";
 
 
-function PostForm({user}) {
+function PostForm({user, title}) {
 
     const [new_posts, setNewPost] = useState([]);
+
+    if (title === null) {
+        title = 'New Post';
+    }
 
     function clearTextInput() {
         const textInput = document.getElementById("text-header-input");
@@ -160,7 +164,7 @@ function PostForm({user}) {
                     <div className="post-content">
 
                         <div className="post-header">
-                            <span className="post-fullname">New Post</span>
+                            <span className="post-fullname">{title}</span>
                             <span className="post-info">@{user.username}</span>
                         </div>
 

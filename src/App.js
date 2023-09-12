@@ -10,6 +10,7 @@ import Sidebar from './components/Sidebar';
 import { Routes, Route } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Profilepage from './pages/Profilepage';
+import PostPage from './pages/PostPage';
 
 
 function App() {
@@ -53,7 +54,7 @@ function App() {
     if (user === undefined) {
       get_logged_user();
     }
-  })
+  }, [user])
 
   return (
       <div className="App">
@@ -67,8 +68,8 @@ function App() {
             <Routes>
               <Route path='/home' element={<Homepage user={user}/>}/>
               <Route path='/search'/>
-              <Route path='/profile' element={<Profilepage user={user}/>}/>
-              {/* <Route path='/profile/' element={<Profilepage user={undefined}/>}/> */}
+              <Route path='/profile/:username' element={<Profilepage logged_user={user}/>}/>
+              <Route path='/post/:id' element={<PostPage logged_user={user}/>}/>
               <Route path='/login' element={<Loginpage/>}/>
               <Route path='/register' element={<Registerpage/>}/>
             </Routes>

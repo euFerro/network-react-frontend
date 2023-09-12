@@ -21,7 +21,7 @@ function Sidebar({user}) {
                 <div id="user-bar" className="side-item-div">
     
                     <div className="post-profile-div">
-                        <Link to={'/profile'}>
+                        <Link to={'/profile/' + user.username}>
                             <img
                                 className="profile-pic"
                                 src={user.profile_picture_url}
@@ -32,8 +32,8 @@ function Sidebar({user}) {
     
                     <div className="user-bar-item">
                         <div className="username-div">
-                            <Link to={'/profile'}>
-                                <strong className="username name-link">
+                            <Link className="name-link" to={'/profile/' + user.username}>
+                                <strong className="username">
                                     {user.first_name} {user.last_name}
                                 </strong>
                             </Link>
@@ -72,12 +72,12 @@ function Sidebar({user}) {
                 
                 {user ? (
                     <>
-                    <MainLink name="Profile" img_source="user.svg"      url="/profile"  have_img={true}     have_name={true}      id=""/>
+                    <MainLink name="Profile" img_source="user.svg"  url={`/profile/${user.username}`}  have_img={true}     have_name={true}      id=""/>
                     </>
                 ) : (
                     <>
-                    <MainLink name="Log In" img_source=""        url="/login"    have_img={false}    have_name={true}      id="login-link"/>
-                    <MainLink name="Register" img_source=""      url="/register" have_img={false}    have_name={true}      id="register-link"/>
+                    <MainLink name="Log In" img_source=""           url="/login"    have_img={false}    have_name={true}      id="login-link"/>
+                    <MainLink name="Register" img_source=""         url="/register" have_img={false}    have_name={true}      id="register-link"/>
                     </>
                 )}
 
