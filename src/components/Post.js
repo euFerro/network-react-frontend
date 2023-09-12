@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./Post.css"
 import { useEffect, useState } from "react";
 
@@ -60,23 +61,23 @@ function Post({user_id, username, profile_picture_url, text, post_img_url, date,
             <div className="post">
 
                 <div className="post-profile-div">
-                    <a href="post.user_url">
+                    <Link to={'/profile/' + username}>
                         <img
                             className="profile-pic"
                             alt="Avatar"
                             src={profile_picture_url}
                         />
-                    </a>
+                    </Link>
                 </div>
 
                 <div className="post-content">
 
                     <div className="post-header">
-                        <a className="name-link" href="post.user.page_url">
+                        <Link className="name-link" to={'/profile/' + username}>
                             <span className="post-fullname">
                                 {username}
                             </span>
-                        </a>
+                        </Link>
                         <span className="post-info">
                             @{username}
                         </span>

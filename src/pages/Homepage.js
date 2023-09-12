@@ -4,6 +4,7 @@ import './Loading.css';
 import HeaderNav from "../components/HeaderNav";
 import PostForm from "../components/PostForm";
 import Post from '../components/Post';
+import { Link } from 'react-router-dom';
 
 
 function Homepage({user}) {
@@ -128,7 +129,7 @@ function Homepage({user}) {
                 )}
 
                 {allPosts.map(post => {
-                    return <Post
+                    return <Link className='nodecoration' to={`/post/${post.key}`}> <Post
                         key={post.key}
                         user_id={post.user_id}
                         profile_picture_url={post.profile_picture_url}
@@ -138,7 +139,7 @@ function Homepage({user}) {
                         post_img_url={post.image_url}
                         likes={post.likes}
                         comment_count={post.comment_count}
-                        />;
+                        /></Link>;
                 })}
 
                 {allPosts.length === 0 ? (
