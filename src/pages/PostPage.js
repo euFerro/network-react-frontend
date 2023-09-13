@@ -7,15 +7,14 @@ import PostForm from "../components/PostForm";
 
 
 function PostPage({logged_user}) {
+    const {id} = useParams();
+    const [post, setPost] = useState([]);
+    const [comments, setComments] = useState([]);
 
     if  (logged_user !== undefined) {
         logged_user = JSON.parse(logged_user);
         console.log(logged_user);
     }
-    
-    const {id} = useParams();
-    const [post, setPost] = useState([]);
-    const [comments, setComments] = useState([]);
 
     function getPost() {
         fetch(`/posts?q=single-post&post_id=${id}`, {
@@ -73,6 +72,14 @@ function PostPage({logged_user}) {
 
         <div id="all-posts-div">
 
+        {logged_user && post.length !== 0 ? (
+            <>
+            <PostForm user={logged_user} title={'New Comment'} placeholder={`Post your response to @${post[0].username}`}/>
+            </>
+        ) : (
+            <></>
+        )}
+
         {comments.length !== 0 ? (
             <>
             {comments.map(post => {
@@ -95,13 +102,6 @@ function PostPage({logged_user}) {
 
         </div>
 
-        {logged_user ? (
-                <>
-                <PostForm user={logged_user} title={'New Comment'}/>
-                </>
-            ) : (
-                <></>
-            )}
         </>
     
     );
