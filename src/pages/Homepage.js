@@ -9,12 +9,11 @@ import { Link } from 'react-router-dom';
 
 function Homepage({user}) {
 
-    const [load_quantity, setQuantity] = useState(10);
     const [allPosts, setAllPosts] = useState([]);
     const [followingPosts, setFollowingPosts] = useState([]);
     const [is_loading, setLoading] = useState(false);
-    let counter_all_posts = 0;
-    let counter_following_posts = 0;
+    const [allPostsCounter, setAllPostsCounter] = useState(0);
+    const [followingPostsCounter, setFollowingPostsCounter] = useState(0);
 
     if  (user !== undefined) {
         user = JSON.parse(user);
@@ -27,45 +26,14 @@ function Homepage({user}) {
         homepage.style.paddingTop = header_nav.offsetHeight + 'px';
     }
 
-    function getAllPosts() {
+    function getPosts(counter, queryString) {
         // console.log('GET ALL POSTS');
-        const start = counter_all_posts;
-        const end = counter_all_posts + load_quantity;
-        counter_all_posts = end;
+        const start = counter * 10;
+        const end = start + 10;
         
         setLoading(true);
-        fetch(`/posts?q=all-posts&start=${start}&end=${end}`, {
+        fetch(`/posts?q=${queryString}&start=${start}&end=${end}`, {
             "method": "GET"
-        })
-        .then(response => response.json())
-        .then(response => {
-
-            if (response.error) {
-                alert(`(!) ${response.error}`);
-                return false;
-            } else {
-                const posts = JSON.parse(response);
-                if (posts.length === 0) {
-                    window.onscroll = undefined;
-                } else {
-                    setAllPosts(allPosts.concat(posts));
-                    // console.log(posts);
-                }
-            }
-            setLoading(false);
-            return false;
-        });
-    }
-
-    function getFollowingPosts() {
-        // console.log('GET FOLLOWING POSTS');
-        const start = counter_following_posts;
-        const end = counter_following_posts + load_quantity;
-        counter_following_posts = end;
-        
-        setLoading(true);
-        fetch(`/posts?q=following-posts&start=${start}&end=${end}`, {
-            "method": "GET",
         })
         .then(response => response.json())
         .then(response => {
@@ -75,11 +43,12 @@ function Homepage({user}) {
                 return false;
             } else {
                 const posts = JSON.parse(response);
-                if (posts.length === 0) {
-                    window.onscroll = undefined;
-                } else {
-                    setFollowingPosts(followingPosts.concat(posts));
-                    // console.log(posts);
+                // console.log(posts);
+                if (queryString === 'all-posts') {
+                    setAllPosts(posts);
+                }
+                if (queryString === 'following-posts') {
+                    setFollowingPosts(posts);
                 }
             }
             setLoading(false);
@@ -87,24 +56,50 @@ function Homepage({user}) {
         });
     }
 
+    function changePage(homepageTabName, cmd) {
+        if (homepageTabName === 'allPosts') {
+            if (cmd === 'next') {
+                setAllPostsCounter(allPostsCounter + 1);
+            }
+            if (cmd === 'prev') {
+                if (allPostsCounter === 0) {
+                    return
+                }
+                setAllPostsCounter(allPostsCounter - 1);
+            }
+        }
+        if (homepageTabName === 'followingPosts') {
+            if (cmd === 'next') {
+                setFollowingPostsCounter(followingPostsCounter + 1);
+            }
+            if (cmd === 'prev') {
+                if (followingPostsCounter === 0) {
+                    return
+                }
+                setFollowingPostsCounter(followingPostsCounter - 1);
+            }
+        }
+    }
+
+    let prevBtnAllPostsClassName = "pagination-btn prev-btn";
+    let prevBtnFollowingPostsClassName = "pagination-btn prev-btn";
+
+    if (allPostsCounter === 0) {
+        prevBtnAllPostsClassName = "pagination-btn prev-btn inactive";
+    }
+    if (followingPostsCounter === 0) {
+        prevBtnFollowingPostsClassName = "pagination-btn prev-btn inactive";
+    }
+
     useEffect (() => {
         document.title = 'Home - Social Network';
 
         set_top_offset();
-        if (counter_all_posts === 0 ) {
-            getAllPosts();
-        }
-        if (counter_following_posts === 0) {
-            getFollowingPosts();
-        }
-        window.onscroll = () => {
-            if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-                getAllPosts();
-                // console.log('END OF PAGE');
-            }
-        };
 
-    }, []);
+        getPosts(allPostsCounter, 'all-posts');
+        getPosts(followingPostsCounter, 'following-posts');
+
+    }, [allPostsCounter, followingPostsCounter]);
 
     return(
         <>
@@ -120,33 +115,45 @@ function Homepage({user}) {
 
                 <div id="all-posts-div">
 
-                {is_loading ? (
-                    <div className='loading-container'>
-                        <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+                    {is_loading ? (
+                        <div className='loading-container'>
+                            <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+                        </div>
+                    ) : (
+                        <></>
+                    )}
+
+                    {allPosts.map(post => {
+                        return <Link className='nodecoration' to={`/post/${post.key}`}> <Post
+                                key={post.key}
+                                user_id={post.user_id}
+                                profile_picture_url={post.profile_picture_url}
+                                username={post.username}
+                                text={post.text}
+                                date={post.created_at}
+                                post_img_url={post.image_url}
+                                likes={post.likes}
+                                comment_count={post.comment_count}
+                            /></Link>;
+                    })}
+
+                    {allPosts.length === 0 ? (
+                        <div className='nothing-here'>Nothing here yet.</div>
+                    ) : (
+                        <></>
+                    )}
+
+                    <div className='pagination-footer'>
+            
+                        <div onClick={() => changePage('allPosts', 'prev')} className={prevBtnAllPostsClassName}>
+                            prev
+                        </div>
+                        <div onClick={() => changePage('allPosts', 'next')} className='pagination-btn next-btn'>
+                            next
+                        </div>
+
+                        <div className='mx-2'>Page: {allPostsCounter + 1}</div>
                     </div>
-                ) : (
-                    <></>
-                )}
-
-                {allPosts.map(post => {
-                    return <Link className='nodecoration' to={`/post/${post.key}`}> <Post
-                        key={post.key}
-                        user_id={post.user_id}
-                        profile_picture_url={post.profile_picture_url}
-                        username={post.username}
-                        text={post.text}
-                        date={post.created_at}
-                        post_img_url={post.image_url}
-                        likes={post.likes}
-                        comment_count={post.comment_count}
-                        /></Link>;
-                })}
-
-                {allPosts.length === 0 ? (
-                    <div className='nothing-here'>Nothing here yet.</div>
-                ) : (
-                    <></>
-                )}
 
                 </div>
 
@@ -161,8 +168,8 @@ function Homepage({user}) {
                     )}
 
                     {followingPosts.map(post => {
-                        return <Post
-                            key={post.pk}
+                        return <Link className='nodecoration' to={`/post/${post.key}`}> <Post
+                            key={post.key}
                             user_id={post.user_id}
                             profile_picture_url={post.profile_picture_url}
                             username={post.username}
@@ -171,7 +178,7 @@ function Homepage({user}) {
                             post_img_url={post.image_url}
                             likes={post.likes}
                             comment_count={post.comment_count}
-                        />
+                        /></Link>;
                     })}
                     
                     {followingPosts.length === 0 ? (
@@ -179,6 +186,18 @@ function Homepage({user}) {
                     ) : (
                         <></>
                     )}
+
+                    <div className='pagination-footer'>
+
+                        <div onClick={() => changePage('followingPosts', 'prev')} className={prevBtnFollowingPostsClassName}>
+                            prev
+                        </div>
+                        <div onClick={() => changePage('followingPosts', 'next')} className="pagination-btn next-btn">
+                            next
+                        </div>
+
+                        <div>Page: {followingPostsCounter + 1}</div>
+                    </div>
 
                 </div>
 

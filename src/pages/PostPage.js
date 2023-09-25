@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import "./PostPage.css";
 import BackBar from "../components/BackBar";
 import PostForm from "../components/PostForm";
+import useHistory from "react-router-dom"
 
 
 function PostPage({logged_user}) {

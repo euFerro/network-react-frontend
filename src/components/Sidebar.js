@@ -72,7 +72,8 @@ function Sidebar({user}) {
                 
                 {user ? (
                     <>
-                    <MainLink name="Profile" img_source="user.svg"  url={`/profile/${user.username}`}  have_img={true}     have_name={true}      id=""/>
+                    <MainLink name="Profile" img_source="user.svg"    url={`/profile/${user.username}`} have_img={true}   have_name={true}  id=""/>
+                    <MainLink name="Saved" img_source="favorite.svg"    url={`/saved/${user.username}`}   have_img={true}   have_name={true}  id=""/>
                     </>
                 ) : (
                     <>
