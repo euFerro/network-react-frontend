@@ -57,6 +57,13 @@ function Profilepage({logged_user}) {
         })
     }
 
+    const isFollowing = logged_user.following_list.some(username_ => {
+        if (username_ === username) {
+            return true;
+        }
+        return false;
+    })
+
     useEffect(() => {
 
         setLoading(true);
@@ -114,8 +121,11 @@ function Profilepage({logged_user}) {
                                         </>
                                     ) : (
                                         <>
-                                        <UnfollowBtn/>
-                                        <FollowBtn/>
+                                        {isFollowing ? (
+                                            <><UnfollowBtn/></>
+                                        ) : (
+                                            <><FollowBtn/></>
+                                        )}
                                         </>
                                     )}
                                     </>

@@ -31,3 +31,32 @@
 .nodecoration {
     text-decoration: none;
 }
+
+.pagination-footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+}
+.pagination-btn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #333;
+    cursor: pointer;
+    height: 25px;
+    width: 80px;
+    margin: 0px;
+}
+.prev-btn {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+.next-btn {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.inactive {
+    cursor: not-allowed;
+}

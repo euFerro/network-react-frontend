@@ -12,3 +12,6 @@
 .back-bar-title {
     margin-left: 20px;
 }
+.backBtn {
+    cursor: pointer;
+}
