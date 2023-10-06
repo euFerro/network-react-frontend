@@ -7,13 +7,13 @@ import PostForm from "../components/PostForm";
 import useHistory from "react-router-dom"
 
 
-function PostPage({logged_user}) {
+function PostPage() {
     const {id} = useParams();
     const [post, setPost] = useState([]);
     const [comments, setComments] = useState([]);
 
+    const logged_user = JSON.parse(localStorage.getItem('logged_user'));
     if  (logged_user !== undefined) {
-        logged_user = JSON.parse(logged_user);
         console.log(logged_user);
     }
 

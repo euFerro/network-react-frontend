@@ -1,23 +1,23 @@
 import "./Profilepage.css";
-import FollowBtn from "../components/FollowBtn";
-import UnfollowBtn from "../components/UnfollowBtn";
 import { useState, useEffect } from "react";
-import Post from "../components/Post";
 import { Link, useLocation, useParams } from "react-router-dom";
+import Post from "../components/Post";
+import FollowBtn from "../components/FollowBtn";
 import BackBar from "../components/BackBar";
 
 
-function Profilepage({logged_user}) {
+function Profilepage() {
 
     const location = useLocation();
     const [posts, setPosts] = useState([]);
     const [is_loading, setLoading] = useState(false);
     const [user, setUser] = useState(undefined);
     const {username} = useParams();
-    const [error, setError] = useState('User');
+    const [error, setError] = useState('You are is offline :( connect to the internet!');
+
+    const logged_user = JSON.parse(localStorage.getItem('logged_user'));
 
     if (logged_user !== null) {
-        logged_user = JSON.parse(logged_user);
         console.log(logged_user);
     }
 
@@ -57,36 +57,26 @@ function Profilepage({logged_user}) {
         })
     }
 
-    const isFollowing = logged_user.following_list.some(username_ => {
-        if (username_ === username) {
-            return true;
-        }
-        return false;
-    })
-
     useEffect(() => {
 
-        setLoading(true);
-
         if (user === undefined) {
-            // console.log('NO USER SET');
+            // If no profile user was set
             getUser();
         }
         if (user !== undefined) {
-            // console.log('USER SET');
+            console.log(user);
             if (user.username !== username) {
-                // console.log('USER CHANGED');
+                // User changed
                 getUser();
                 setPosts([]);
             }
             if (posts.length === 0) {
-                // console.log('NEW POSTS UPDATED');
+                // Get new user's posts
                 getUserPosts();
             }
         }
 
-        setLoading(false);
-    }, [user, username, location, error, is_loading])
+    }, [user, location, error])
 
     if (user) {
         return(
@@ -116,23 +106,15 @@ function Profilepage({logged_user}) {
                                 {logged_user !== null ? (
                                     <>
                                     {logged_user.username === username ? (
-                                        <>
-                                        <button id="edit-profile-btn" className="secondary-btn" type="submit">edit profile</button>
-                                        </>
+                                        <><button id="edit-profile-btn" className="secondary-btn" type="submit">edit profile</button></>
                                     ) : (
-                                        <>
-                                        {isFollowing ? (
-                                            <><UnfollowBtn/></>
-                                        ) : (
-                                            <><FollowBtn/></>
-                                        )}
-                                        </>
+                                        <><FollowBtn user={user}/></>
                                     )}
                                     </>
                                 ) : (
                                     <>
                                     <Link to={'/login'}>
-                                        <FollowBtn/>
+                                    <button id="follow-btn" className="primary-btn" type="submit">follow</button>
                                     </Link>
                                     </>
                                 )}

@@ -66,10 +66,10 @@ function App() {
       <main>
           <div className="main">
             <Routes>
-              <Route path='/home' element={<Homepage user={user}/>}/>
+              <Route path='/home' element={<Homepage/>}/>
               <Route path='/search'/>
-              <Route path='/profile/:username' element={<Profilepage logged_user={user}/>}/>
-              <Route path='/post/:id' element={<PostPage logged_user={user}/>}/>
+              <Route path='/profile/:username' element={<Profilepage/>}/>
+              <Route path='/post/:id' element={<PostPage/>}/>
               <Route path='/login' element={<Loginpage/>}/>
               <Route path='/register' element={<Registerpage/>}/>
             </Routes>
