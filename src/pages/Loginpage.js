@@ -41,13 +41,12 @@ function Loginpage() {
         if (usernameInput.value === '' || passwordInput.value === '') {
             return false
         }
-        // TODO fetch
-        setLoading(true);
 
         const formData = new FormData();
         formData.append('username', usernameInput.value);
         formData.append('password', passwordInput.value);
 
+        setLoading(true);
         fetch('/login', {
             "method": "POST",
             "body": formData

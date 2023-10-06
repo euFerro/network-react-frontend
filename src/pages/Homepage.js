@@ -7,7 +7,7 @@ import Post from '../components/Post';
 import { Link } from 'react-router-dom';
 
 
-function Homepage({user}) {
+function Homepage() {
 
     const [allPosts, setAllPosts] = useState([]);
     const [followingPosts, setFollowingPosts] = useState([]);
@@ -15,9 +15,9 @@ function Homepage({user}) {
     const [allPostsCounter, setAllPostsCounter] = useState(0);
     const [followingPostsCounter, setFollowingPostsCounter] = useState(0);
 
+    const user = JSON.parse(localStorage.getItem('logged_user'));
     if  (user !== undefined) {
-        user = JSON.parse(user);
-        // console.log(user);
+        console.log(user);
     }
     
     function set_top_offset() {

@@ -12,3 +12,15 @@
 .primary-btn:hover {
     background-color: #ddd;
 }
+.secondary-btn {
+    border-radius: 20px;
+    border: 1px solid white;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    outline: none;
+    margin-right: 20px;
+    width: max-content;
+    padding-left: 10px;
+    padding-right: 10px;
+}
