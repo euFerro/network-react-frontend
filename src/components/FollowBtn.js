@@ -78,7 +78,7 @@ function FollowBtn({user}) {
                     following_username_list: new_following_username_list
                 }
                 localStorage.setItem('logged_user', JSON.stringify(new_logged_user));
-                setFollowing(true);
+                setFollowing(false);
             }
             if (response.error) {
                 alert(response.error)
