@@ -4,7 +4,6 @@ import './Loading.css';
 import HeaderNav from "../components/HeaderNav";
 import PostForm from "../components/PostForm";
 import Post from '../components/Post';
-import { Link } from 'react-router-dom';
 
 
 function Homepage() {
@@ -74,7 +73,7 @@ function Homepage() {
             }
             if (cmd === 'prev') {
                 if (followingPostsCounter === 0) {
-                    return
+                    return;
                 }
                 setFollowingPostsCounter(followingPostsCounter - 1);
             }
@@ -124,8 +123,9 @@ function Homepage() {
                     )}
 
                     {allPosts.map(post => {
-                        return <Link className='nodecoration' to={`/post/${post.key}`}> <Post
+                        return <Post
                                 key={post.key}
+                                post_id={post.key}
                                 user_id={post.user_id}
                                 profile_picture_url={post.profile_picture_url}
                                 username={post.username}
@@ -134,7 +134,7 @@ function Homepage() {
                                 post_img_url={post.image_url}
                                 likes={post.likes}
                                 comment_count={post.comment_count}
-                            /></Link>;
+                            />;
                     })}
 
                     {allPosts.length === 0 ? (
@@ -168,8 +168,9 @@ function Homepage() {
                     )}
 
                     {followingPosts.map(post => {
-                        return <Link className='nodecoration' to={`/post/${post.key}`}> <Post
+                        return <Post
                             key={post.key}
+                            post_id={post.key}
                             user_id={post.user_id}
                             profile_picture_url={post.profile_picture_url}
                             username={post.username}
@@ -178,7 +179,7 @@ function Homepage() {
                             post_img_url={post.image_url}
                             likes={post.likes}
                             comment_count={post.comment_count}
-                        /></Link>;
+                        />;
                     })}
                     
                     {followingPosts.length === 0 ? (

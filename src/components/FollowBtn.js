@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./FollowBtn.css"
 
 
-function FollowBtn({user}) {
+function FollowBtn({user, setUser}) {
     const [isFollowing, setFollowing] = useState(undefined);
     
     const logged_user = JSON.parse(localStorage.getItem('logged_user'));
@@ -48,6 +48,7 @@ function FollowBtn({user}) {
                 }
                 localStorage.setItem('logged_user', JSON.stringify(new_logged_user));
                 setFollowing(true);
+                setUser(user);
             }
             if (response.error) {
                 alert(response.error)
@@ -79,6 +80,7 @@ function FollowBtn({user}) {
                 }
                 localStorage.setItem('logged_user', JSON.stringify(new_logged_user));
                 setFollowing(false);
+                setUser(user);
             }
             if (response.error) {
                 alert(response.error)
