@@ -56,6 +56,7 @@ function PostPage() {
             {post.map(post => {
                 return <Post
                 key={post.key}
+                post_id={post.key}
                 user_id={post.user_id}
                 profile_picture_url={post.profile_picture_url}
                 username={post.username}
@@ -85,15 +86,15 @@ function PostPage() {
             <>
             {comments.map(post => {
                 return <Post
-                key={post.key}
-                user_id={post.user_id}
-                profile_picture_url={post.profile_picture_url}
-                username={post.username}
-                text={post.text}
-                date={post.created_at}
-                post_img_url={post.image_url}
-                likes={post.likes}
-                comment_count={post.comment_count}
+                    key={post.key}
+                    user_id={post.user_id}
+                    profile_picture_url={post.profile_picture_url}
+                    username={post.username}
+                    text={post.text}
+                    date={post.created_at}
+                    post_img_url={post.image_url}
+                    likes={post.likes}
+                    comment_count={post.comment_count}
                 />;
             })}
             </>

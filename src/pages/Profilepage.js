@@ -58,7 +58,7 @@ function Profilepage() {
     }
 
     useEffect(() => {
-
+        console.log('Page Updated');
         if (user === undefined) {
             // If no profile user was set
             getUser();
@@ -108,7 +108,7 @@ function Profilepage() {
                                     {logged_user.username === username ? (
                                         <><button id="edit-profile-btn" className="secondary-btn" type="submit">edit profile</button></>
                                     ) : (
-                                        <><FollowBtn user={user}/></>
+                                        <><FollowBtn user={user} setUser={setUser}/></>
                                     )}
                                     </>
                                 ) : (
@@ -148,8 +148,9 @@ function Profilepage() {
                         )}
     
                         {posts.map(post => {
-                            return <Link className='nodecoration' to={`/post/${post.key}`}> <Post
+                            return <Post
                                 key={post.key}
+                                post_id={post.key}
                                 user_id={post.user_id}
                                 profile_picture_url={post.profile_picture_url}
                                 username={post.username}
@@ -158,7 +159,7 @@ function Profilepage() {
                                 post_img_url={post.image_url}
                                 likes={post.likes}
                                 comment_count={post.comment_count}
-                            /></Link>;
+                            />;
                         })}
     
                         {posts.length === 0 ? (

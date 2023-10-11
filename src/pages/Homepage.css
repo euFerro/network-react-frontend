@@ -28,10 +28,6 @@
     margin: 20px;
 }
 
-.nodecoration {
-    text-decoration: none;
-}
-
 .pagination-footer {
     display: flex;
     flex-direction: row;

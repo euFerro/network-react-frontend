@@ -11,6 +11,7 @@ import { Routes, Route } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Profilepage from './pages/Profilepage';
 import PostPage from './pages/PostPage';
+import Likedpage from './pages/Likedpage';
 
 
 function App() {
@@ -33,28 +34,37 @@ function App() {
 
   function get_logged_user() {
     
-    const logged_user = localStorage.getItem("logged_user");
+    const logged_user = JSON.parse(localStorage.getItem("logged_user"));
+    fetch("/profile", {
+      "method": "GET"
+    })
+    .then(response => response.json())
+    .then(response => {
+      if (logged_user !== response.user) {
+        console.log('User changed');
+        setUser(response.user);
+        localStorage.setItem("logged_user", response.user);
+      }
+    })
 
-    if (logged_user !== undefined) {
-      setUser(logged_user);
-      // alert(`User detected:  ${user}`)
-    } else {
-      // alert('NOT LOGGED IN, no user detected');
-    }
   }
 
   useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const redirect_url = urlParams.get("redirect_url");
     if (window.location.pathname === '/') {
       window.location.replace('/home');
+    } else {
+      if (redirect_url !== null) {
+        window.location.replace(redirect_url);
+      }
     }
 
     resizeMain();
     window.addEventListener('resize', resizeMain);
 
-    if (user === undefined) {
-      get_logged_user();
-    }
-  }, [user])
+    get_logged_user();
+  }, [])
 
   return (
       <div className="App">
@@ -72,6 +82,8 @@ function App() {
               <Route path='/post/:id' element={<PostPage/>}/>
               <Route path='/login' element={<Loginpage/>}/>
               <Route path='/register' element={<Registerpage/>}/>
+              <Route path='/liked/:username' element={<Likedpage/>}/>
+              <Route path='*' element={<div className='nothing-here'>Not Found 404</div>}/>
             </Routes>
           </div>
       </main>

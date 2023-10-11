@@ -244,6 +244,7 @@ function PostForm({user, title, placeholder}) {
                     {new_posts.map(post => {
                         return <Post
                             key={post.key}
+                            post_id={post.key}
                             user_id={post.user_id}
                             profile_picture_url={post.profile_picture_url}
                             username={post.username}
