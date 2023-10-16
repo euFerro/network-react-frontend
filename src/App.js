@@ -19,6 +19,7 @@ function App() {
   const [user, setUser] = useState(undefined)
 
   function resizeMain() {
+    console.log('RESIZE MAIN');
     const sidebar = document.querySelector('#side-bar');
     const main = document.querySelector('main');
     
@@ -52,6 +53,7 @@ function App() {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const redirect_url = urlParams.get("redirect_url");
+    console.log(`Redirect Url = ${redirect_url}`);
     if (window.location.pathname === '/') {
       window.location.replace('/home');
     } else {
@@ -64,7 +66,7 @@ function App() {
     window.addEventListener('resize', resizeMain);
 
     get_logged_user();
-  }, [])
+  });
 
   return (
       <div className="App">
