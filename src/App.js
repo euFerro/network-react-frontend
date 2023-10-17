@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import Profilepage from './pages/Profilepage';
 import PostPage from './pages/PostPage';
 import Likedpage from './pages/Likedpage';
+import EditPost from './pages/EditPost';
 
 
 function App() {
@@ -85,6 +86,7 @@ function App() {
               <Route path='/login' element={<Loginpage/>}/>
               <Route path='/register' element={<Registerpage/>}/>
               <Route path='/liked/:username' element={<Likedpage/>}/>
+              <Route path='/edit/:post_id' element={<EditPost/>}/>
               <Route path='*' element={<div className='nothing-here'>Not Found 404</div>}/>
             </Routes>
           </div>
