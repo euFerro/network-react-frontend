@@ -3,9 +3,16 @@ import { useState, useEffect } from "react";
 import Post from "./Post";
 
 
-function PostForm({user, title, placeholder}) {
-
+function PostForm({user, title, placeholder, btn_name}) {
     const [new_posts, setNewPost] = useState([]);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const text = urlParams.get("text");
+    const img_url = urlParams.get("img_url");
+
+    if (btn_name === undefined) {
+        btn_name = 'Post';
+    }
 
     if (title === undefined) {
         title = 'New Post';
@@ -53,7 +60,7 @@ function PostForm({user, title, placeholder}) {
 
     function resizeTextarea() {
         const textarea = document.querySelector('#text-input');
-        textarea.style.height = this.scrollHeight + 'px';
+        textarea.style.height = textarea.scrollHeight + 'px';
     }
 
     function hideFormImage() {
@@ -166,6 +173,17 @@ function PostForm({user, title, placeholder}) {
 
     useEffect(() => {
         hideFormImage();
+        if (text !== undefined) {
+            const textInput = document.getElementById("text-input");
+            textInput.value = text;
+        }
+        if (img_url !== '' && img_url !== undefined && img_url !== null) {
+            console.log(img_url);
+            const img = document.getElementById("post-img");
+            img.src = img_url;
+            showFormImage();
+        }
+        resizeTextarea();
         const form = document.querySelector("#simple-post-form");
         const textarea = document.querySelector('#text-input');
         form.addEventListener("submit", send_post);
@@ -227,7 +245,7 @@ function PostForm({user, title, placeholder}) {
                                         </div>
                                     </label>
                                     <input onChange={loadImg} id="image-input" type="file" accept=".jpg, .jpeg, .png"/>
-                                    <input className="primary-btn" type="submit" value="Post"/>
+                                    <input className="primary-btn" type="submit" value={btn_name}/>
                                 </div>
 
                                 <div id="post-header-msg-div"></div>

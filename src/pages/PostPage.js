@@ -1,10 +1,8 @@
 import { useParams } from "react-router-dom";
 import Post from "../components/Post";
 import { useEffect, useState } from "react";
-import "./PostPage.css";
 import BackBar from "../components/BackBar";
 import PostForm from "../components/PostForm";
-import useHistory from "react-router-dom"
 
 
 function PostPage() {
@@ -76,7 +74,11 @@ function PostPage() {
 
         {logged_user && post.length !== 0 ? (
             <>
-            <PostForm user={logged_user} title={'New Comment'} placeholder={`Post your response to @${post[0].username}`}/>
+            <PostForm
+                user={logged_user}
+                title={'New Comment'}
+                placeholder={`Post your response to @${post[0].username}`}
+                btn_name={'Comment'}/>
             </>
         ) : (
             <></>

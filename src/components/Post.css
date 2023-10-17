@@ -76,6 +76,7 @@
 .post-text {
     color: #ddd;
     font-size: calc(12px + 0.4vmin);
+    padding-right: 35px;
 }
 .post-footer {
     display: flex;
