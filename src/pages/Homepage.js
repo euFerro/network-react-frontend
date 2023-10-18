@@ -15,9 +15,9 @@ function Homepage() {
     const [followingPostsCounter, setFollowingPostsCounter] = useState(0);
 
     const user = JSON.parse(localStorage.getItem('logged_user'));
-    if  (user !== undefined) {
-        console.log(user);
-    }
+    // if  (user !== undefined) {
+    //     console.log(user);
+    // }
     
     function set_top_offset() {
         const header_nav = document.querySelector('#header-nav');
@@ -124,17 +124,9 @@ function Homepage() {
 
                     {allPosts.map(post => {
                         return <Post
-                                key={post.key}
-                                post_id={post.key}
-                                user_id={post.user_id}
-                                profile_picture_url={post.profile_picture_url}
-                                username={post.username}
-                                text={post.text}
-                                date={post.created_at}
-                                post_img_url={post.image_url}
-                                likes={post.likes}
-                                comment_count={post.comment_count}
-                            />;
+                            key={post.key}
+                            post={post}    
+                        />;
                     })}
 
                     {allPosts.length === 0 ? (
@@ -170,15 +162,7 @@ function Homepage() {
                     {followingPosts.map(post => {
                         return <Post
                             key={post.key}
-                            post_id={post.key}
-                            user_id={post.user_id}
-                            profile_picture_url={post.profile_picture_url}
-                            username={post.username}
-                            text={post.text}
-                            date={post.created_at}
-                            post_img_url={post.image_url}
-                            likes={post.likes}
-                            comment_count={post.comment_count}
+                            post={post}
                         />;
                     })}
                     

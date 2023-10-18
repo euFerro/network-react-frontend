@@ -2,16 +2,26 @@ import { Link } from "react-router-dom";
 import "./Post.css"
 import LikeBtn from "./LikeBtn";
 
+// key={post.key}
+// user_id={post.user_id}
+// post.profile_picture_url={post.post.profile_picture_url}
+// post.username={post.post.username}
+// text={post.text}
+// post.created_at={post.created_at}
+// post_img_url={post.image_url}
+// likes={post.likes}
+// comment_count={post.comment_count}
 
-function Post({user_id, post_id, username, profile_picture_url, text, post_img_url, date, likes, comment_count}) {    
+function Post({post}) {    
 
+    console.log(post);
     let post_img = '';
-    if (post_img_url !== '') {
+    if (post.image_url !== '') {
 
         post_img = <div className="post-img-div">
                         <img
                             className="post-img"
-                            src={post_img_url}
+                            src={post.image_url}
                             alt="Post img"
                         />
                     </div>
@@ -25,11 +35,11 @@ function Post({user_id, post_id, username, profile_picture_url, text, post_img_u
             <div className="post">
 
                 <div className="post-profile-div">
-                    <Link to={'/profile/' + username}>
+                    <Link to={'/profile/' + post.username}>
                         <img
                             className="profile-pic"
                             alt="Avatar"
-                            src={profile_picture_url}
+                            src={post.profile_picture_url}
                         />
                     </Link>
                 </div>
@@ -37,26 +47,26 @@ function Post({user_id, post_id, username, profile_picture_url, text, post_img_u
                 <div className="post-content">
 
                     <div className="post-header">
-                        <Link className="name-link" to={'/profile/' + username}>
+                        <Link className="name-link" to={'/profile/' + post.username}>
                             <span className="post-fullname">
-                                {username}
+                                {post.username}
                             </span>
                         </Link>
                         <span className="post-info">
-                            @{username}
+                            @{post.username}
                         </span>
                         <span className="post-info">
-                            {date.hour}:{date.minute} {date.month}/{date.day}/{date.year}
+                            {post.created_at.hour}:{post.created_at.minute} {post.created_at.month}/{post.created_at.day}/{post.created_at.year}
                         </span>
                     </div>
-                    <Link className='nodecoration' to={`/post/${post_id}`}>
-                        <div className="post-text">{text}</div>
+                    <Link className='nodecoration' to={`/post/${post.key}`}>
+                        <div className="post-text">{post.text}</div>
                         {post_img}
                     </Link>
 
                     <div className="post-footer">
 
-                        <LikeBtn post_id={post_id} likes={likes}/>
+                        <LikeBtn post_id={post.key} likes={post.likes}/>
 
                         <div className="comment-div">
                             <div className="footer-btn-div">
@@ -68,13 +78,14 @@ function Post({user_id, post_id, username, profile_picture_url, text, post_img_u
                                     </g>
                                 </svg>
                             </div>
-                            <span className="footer-num">{comment_count}</span>
+                            <span className="footer-num">{post.comment_count}</span>
                         </div>
                         
                         {logged_user !== null ? (
                             <>
-                            {logged_user.username === username ? (
-                                <Link to={`/edit/${post_id}?text=${text}&img_url=${post_img_url}`}>
+                            {logged_user.username === post.username ? (
+
+                                <Link to={`/edit/${post.key}`} state={{post: post}}>
                                     <div className="comment-div">
                                         <div className="footer-btn-div">
                                             <svg className="footer-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -84,6 +95,7 @@ function Post({user_id, post_id, username, profile_picture_url, text, post_img_u
                                         </div>
                                     </div>
                                 </Link>
+
                             ) : (
                                 <></>
                             )}
