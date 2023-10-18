@@ -3,12 +3,8 @@ import { useState, useEffect } from "react";
 import Post from "./Post";
 
 
-function PostForm({user, title, placeholder, btn_name}) {
+function PostForm({user, title, placeholder, btn_name, post}) {
     const [new_posts, setNewPost] = useState([]);
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const text = urlParams.get("text");
-    const img_url = urlParams.get("img_url");
 
     if (btn_name === undefined) {
         btn_name = 'Post';
@@ -173,15 +169,16 @@ function PostForm({user, title, placeholder, btn_name}) {
 
     useEffect(() => {
         hideFormImage();
-        if (text !== undefined) {
+        if (post !== undefined) {
             const textInput = document.getElementById("text-input");
-            textInput.value = text;
-        }
-        if (img_url !== '' && img_url !== undefined && img_url !== null) {
-            console.log(img_url);
-            const img = document.getElementById("post-img");
-            img.src = img_url;
-            showFormImage();
+            textInput.value = post.text;
+
+            if (post.image_url !== '' && post.image_url !== undefined && post.image_url !== null) {
+                console.log(post.image_url);
+                const img = document.getElementById("post-img");
+                img.src = post.image_url;
+                showFormImage();
+            }
         }
         resizeTextarea();
         const form = document.querySelector("#simple-post-form");
@@ -211,6 +208,13 @@ function PostForm({user, title, placeholder, btn_name}) {
                         <div className="post-header">
                             <span className="post-fullname">{title}</span>
                             <span className="post-info">@{user.username}</span>
+                            {post !== undefined ? (
+                                <span className="post-info">
+                                    {post.created_at.hour}:{post.created_at.minute} {post.created_at.month}/{post.created_at.day}/{post.created_at.year} 
+                                </span>
+                            ): (
+                                <></>
+                            )}
                         </div>
 
                         <div className="post-form-div">
@@ -262,16 +266,8 @@ function PostForm({user, title, placeholder, btn_name}) {
                     {new_posts.map(post => {
                         return <Post
                             key={post.key}
-                            post_id={post.key}
-                            user_id={post.user_id}
-                            profile_picture_url={post.profile_picture_url}
-                            username={post.username}
-                            text={post.text}
-                            date={post.created_at}
-                            post_img_url={post.image_url}
-                            likes={post.likes}
-                            comment_count={post.comment_count}
-                            />;
+                            post={post}
+                        />;
                     })}
                         
                 </div>
